@@ -1,8 +1,8 @@
 // src/components/EmailList.js
 
 import React, { useState, useEffect } from 'react';
-import { getEmailList } from '../api/emailApi';
-import EmailContent from './EmailContent'; // Import the EmailContent component
+import { getEmailList } from '../api/ListApi';
+import EmailContent from './EmailContent'; 
 import './EmailList.css'
 
 function EmailList() {
@@ -22,19 +22,16 @@ function EmailList() {
       });
   }, []);
 
-  const handleEmailClick = (emailId) => {
-    setSelectedEmailId(emailId);
-  };
 
   return (
-    <div>
+    <>
       <div className='main'>
         <div className='list'>
           {loading ? (
             <p>Loading...</p>
           ) : (
             emailList.map((email) => (
-              <div key={email.id} onClick={() => handleEmailClick(email.id)} className={`tab ${email.clicked?'clicked':'tab'}`}>
+              <div className='tab'>
                 <div className='holder'>
                   <div className='from'>
                     <a>From: </a>
@@ -47,36 +44,25 @@ function EmailList() {
                   <div className='short'>
                     <a>{email.short_description}</a>
                   </div>
-                  <div className='date'>
-                  {new Date(email.date).toLocaleString('en-US', {
+                  <div className='date'>{
+                      new Date(email.date).toLocaleString('en-US',{
                         year: 'numeric',
                         month: '2-digit',
                         day: '2-digit',
                         hour: '2-digit',
                         minute: '2-digit',
                         second: '2-digit',
-                        hour12: true, // Display time in 12-hour format with AM/PM
-                      })}
-                  </div>
+                        hour12: true, 
+                      }
+                    )
+                  }
                 </div>
-                
-              </div>
-            ))
-          )}
+              </div>  
+            </div>
+          )))}
         </div>
-        <div className="content">
-          <div className='name'>
-            
-          </div>
-            {selectedEmailId && (
-            <EmailContent emailId={selectedEmailId} />
-            )}
-          </div>
       </div>
-      
-      
-      
-    </div>
+    </>
   );
 }
 

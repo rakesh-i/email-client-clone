@@ -20,7 +20,6 @@ function EmailContent({ emailId }) {
     <div>
       {emailContent ? (
         <div className='container'>
-          <h2>{emailContent.id}</h2>
           <div dangerouslySetInnerHTML={{ __html: emailContent.body }} />
         </div>
       ) : (

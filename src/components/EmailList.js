@@ -27,24 +27,25 @@ function EmailList() {
     <>
       <div className='main'>
         <div className='list'>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            emailList.map((email) => (
-              <div className='tab'>
-                <div className='holder'>
-                  <div className='from'>
-                    <a>From: </a>
-                    <a>{email.from.name}  &lt;{email.from.email}&gt;</a>
+            {
+              loading ? (<p>Loading...</p>) : (emailList.map((email) => (
+                <div className='holder' key={email.id} onClick={()=>setSelectedEmailId(email.id)}>
+                  <div className='firstletter'>
+                    <a>{email.from.name[0].toUpperCase()}</a>
                   </div>
-                  <div>
-                    <a>Subject: </a>
-                    <a>{email.subject} </a>
-                  </div>
-                  <div className='short'>
-                    <a>{email.short_description}</a>
-                  </div>
-                  <div className='date'>{
+                  <div className='content'>
+                    <div className='from'>
+                      <a>From: </a>
+                      <a id='email'>{email.from.name}  &lt;{email.from.email}&gt;</a>
+                    </div>
+                    <div>
+                      <a >Subject: </a>
+                      <a id='sub'>{email.subject} </a>
+                    </div>
+                    <div className='short'>
+                      <a>{email.short_description}</a>
+                    </div>
+                    <div className='date'>{
                       new Date(email.date).toLocaleString('en-US',{
                         year: 'numeric',
                         month: '2-digit',
@@ -53,14 +54,20 @@ function EmailList() {
                         minute: '2-digit',
                         second: '2-digit',
                         hour12: true, 
+                        }
+                        )
                       }
-                    )
-                  }
-                </div>
-              </div>  
-            </div>
-          )))}
+                    </div>
+                  </div>
+                </div>  
+              )))
+            }
         </div>
+
+        <div className='fullemail'>
+          {selectedEmailId&&<EmailContent emailId={selectedEmailId}/>}
+        </div>
+        
       </div>
     </>
   );
